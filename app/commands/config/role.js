@@ -9,14 +9,16 @@ const { DiscordCommand } = require('../../lib/classes/commands')(Collection);
  */
 
 module.exports = () => {
-	const optionName = 'role';
-
 	const data = new SlashCommandSubcommandBuilder()
 		.setName('role')
-		.setDescription('Set which role can use this bot\'s commands')
-		.add
+		.setDescription('Set which role can use a command')
+		.addStringOption(option => option
+			.setName('command')
+			.setDescription('Command to limit access to')
+			.setAutocomplete(false)
+			.setRequired(true))
 		.addRoleOption(option => option
-			.setName(optionName)
+			.setName('role')
 			.setDescription('Which role to use')
 			.setRequired(true));
 
@@ -25,9 +27,9 @@ module.exports = () => {
  * @param {Role} role
  * @returns {Array<ApplicationCommandPermissionData>}
  */
-	const buildPermissions = async (guild, role) => {
-		const permissions = [
-			{
+	const buildPermissionsOptions = async (guild, role) => {
+		const basePermissions = [
+			{ // always allow guild owner
 				id: guild.ownerId,
 				type: 'USER',
 				permission: true,
@@ -37,36 +39,40 @@ module.exports = () => {
 				type: 'ROLE',
 				permission: true,
 			},
-			{
+			{ // deny public
 				id: guild.roles.everyone.id,
 				type: 'ROLE',
 				permission: false,
 			},
 		];
 		return guild.roles.fetch()
-			.then(roles => roles
-				.filter(adminRole => adminRole.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
-				.map(adminRole => ({
-					id: adminRole.id,
-					type: 'ROLE',
-					permission: true,
-				}))
-				.concat(permissions)
-				.filter((v, i, a) => // remove duplicate role IDs
-					a.findIndex(t => (t.id === v.id)) === i
-				)
-			);
+			.then(roles => roles.filter(adminRole => adminRole.permissions.has(Permissions.FLAGS.ADMINISTRATOR)))
+			.then(adminRoles => adminRoles.map(adminRole => ({
+				id: adminRole.id,
+				type: 'ROLE',
+				permission: true,
+			}))
+			.then(adminPermissions => adminPermissions.concat(basePermissions))
+			.then(permissions => permissions
+				.filter((v, i, a) => a.findIndex(t => (t.id === v.id)) === i) // remove duplicate role IDs
+			))
+			.then(permissions => ({ guild, permissions }));
 	};
 
 	/** @param {CommandInteraction} interaction */
 	const execute = async interaction => {
-		const role = interaction.options.getRole(optionName);
-		const permissions = await buildPermissions(interaction.guild, role);
-		return interaction.client.application.commands.fetch()
-			.then(commands => Promise.all(commands.map(async command => {
-				command.permissions.set({ guild: interaction.guild.id, permissions });
-			})))
-			.then(() => interaction.reply(`Set manager role to ${role.name}`));
+		const commandName = interaction.options.getString('command');
+		const role = interaction.options.getRole('role');
+		return interaction.guild.commands.fetch()
+			.then(commands => commands.filter(command => command.name === commandName))
+			.then(commands => commands.first())
+			.then(command => {
+				if (!command) throw new Error(`\`/${commandName}\` not found.`);
+				console.log(`setting permissions for ${commandName}`);
+				return buildPermissionsOptions(interaction.guild, role)
+					.then(options => command.permissions.set(options));
+			})
+			.then(() => interaction.reply(`Set role for \`/${commandName}\` to ${role}`));
 	};
 
 	return new DiscordCommand(data, execute);
