@@ -1,6 +1,6 @@
 const { SlashCommandSubcommandBuilder } = require('@discordjs/builders');
 const { Collection, Permissions } = require('discord.js');
-const { DiscordCommand } = require('../../models/discord/commands')(Collection);
+const { DiscordCommand } = require('../../lib/classes/commands')(Collection);
 /**
  * @typedef {import('discord.js').CommandInteraction} CommandInteraction
  * @typedef {import('discord.js').Guild} Guild
@@ -14,6 +14,7 @@ module.exports = () => {
 	const data = new SlashCommandSubcommandBuilder()
 		.setName('role')
 		.setDescription('Set which role can use this bot\'s commands')
+		.add
 		.addRoleOption(option => option
 			.setName(optionName)
 			.setDescription('Which role to use')

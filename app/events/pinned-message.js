@@ -1,4 +1,4 @@
-const { DiscordEvent } = require('../models/discord/events');
+const { DiscordEvent } = require('../lib/classes/events');
 
 module.exports = new DiscordEvent('messageCreate', false, async message => {
 	if (message.author.id == message.client.user.id

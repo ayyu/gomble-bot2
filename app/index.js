@@ -1,5 +1,5 @@
 const { Collection } = require('discord.js');
-const { requireCommands } = require('./models/discord/commands')(Collection);
+const { requireCommands } = require('./lib/classes/commands')(Collection);
 const keyvs = require('./services/keyv');
 const client = require('./services/discord-client');
 

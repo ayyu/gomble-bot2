@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { Collection } = require('discord.js');
-const { DiscordParentCommand } = require('../models/discord/commands')(Collection);
+const { DiscordParentCommand } = require('../lib/classes/commands')(Collection);
 
 module.exports = keyvs => {
 	const data = new SlashCommandBuilder()

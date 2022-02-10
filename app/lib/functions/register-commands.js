@@ -5,7 +5,7 @@ const { Routes } = require('discord-api-types/v9');
  * @typedef {import('discord.js').OAuth2Guild} Guild
  */
 
-const commands = require('../commands')().map(command => command.data.toJSON());
+const commands = require('../../commands')().map(command => command.data.toJSON());
 
 /**
  * @param {Client} client

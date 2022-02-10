@@ -1,5 +1,5 @@
 const client = require('../services/discord-client');
-const { registerGuildCommands } = require('../utilities/register-commands');
+const { registerGuildCommands } = require('../lib/functions/register-commands');
 if (process.env.NODE_ENV != 'production') require('dotenv').config();
 
 const guildId = process.env.GUILD_ID;
