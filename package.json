@@ -1,0 +1,39 @@
+{
+  "name": "gomble-bot",
+  "version": "2.0.0",
+  "description": "Discord.js bot for Twitch-style predictions",
+  "main": "app/index.js",
+  "engines": {
+    "node": "16.x",
+    "npm": "*"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node app/index.js",
+    "postinstall": "node app/scripts/register-commands.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayyu/gomble-bot2"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "eslint": "^8.8.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-jest": "^26.1.0",
+    "eslint-plugin-jsdoc": "^37.8.0",
+    "jest": "^27.5.1"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "@keyv/postgres": "^1.2.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.6.0",
+    "dotenv": "^16.0.0",
+    "keyv": "^4.1.1",
+    "node.js": "^0.0.1-security"
+  }
+}
