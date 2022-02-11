@@ -1,6 +1,9 @@
 import config from "./config";
-import bet from "./bet";
+import predict from "./predict";
+import prediction from "./prediction";
 
 export default [
-	config, bet
+	config,
+	predict,
+	prediction,
 ];

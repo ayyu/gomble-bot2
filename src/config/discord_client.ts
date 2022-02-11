@@ -1,9 +1,11 @@
-import { Intents } from 'discord.js';
-if (process.env.NODE_ENV != 'production') require('dotenv').config();
+import { ClientOptions, Intents } from 'discord.js';
+import { container } from 'tsyringe';
 
-export const options = { intents: [
+export const options: ClientOptions = {
+	intents: [
 		Intents.FLAGS.GUILDS,
 		Intents.FLAGS.GUILD_MESSAGES,
-	] };
+	],
+};
 
-export const token = process.env.DISCORD_TOKEN ?? null;
+container.registerInstance('clientOptions', options);

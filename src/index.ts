@@ -1,13 +1,10 @@
-import "reflect-metadata";
-
-import { Container } from "typedi";
+import { container, GombleClient } from "./services/di";
 
 import commands from "./commands";
 import events from "./events";
 import { CommandHandler } from "./lib/classes/CommandHandler";
-import GombleClient from "./services/GombleClient";
 
-const client = Container.get(GombleClient);
+const client = container.resolve(GombleClient);
 
 client.commands = CommandHandler.collectCommands(commands);
 

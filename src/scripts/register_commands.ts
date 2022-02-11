@@ -1,8 +1,7 @@
 import { registerCommands } from '../lib/functions/register_commands';
-import { Container } from "typedi";
-import GombleClient from '../services/GombleClient';
+import { container, GombleClient } from "../services/di";
 
-const client = Container.get(GombleClient)
+const client = container.resolve(GombleClient);
 
 client.login()
 	.then(() => registerCommands(client))

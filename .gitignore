@@ -1,6 +1,8 @@
-config.json
 node_modules
-.env
-*.sqlite
 .vscode
 .eslintrc.*
+.env
+config.json
+*.sqlite
+*.db
+dist/*

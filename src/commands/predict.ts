@@ -5,11 +5,11 @@ import { choices } from '../config/bets';
 import { CommandHandler } from "../lib/classes/CommandHandler";
 
 const data = new SlashCommandBuilder()
-	.setName('bet')
-	.setDescription('Place or raise your bet.');
+	.setName('predict')
+	.setDescription('Predict with points. Win back more if your prediction is correct.');
 
-async function execute(interaction: CommandInteraction) {
-	interaction.user;
+async function execute(interaction: CommandInteraction): Promise<any> {
+
 	const choiceRow = new MessageActionRow()
 		.addComponents(
 			choices.map((choice) => ({

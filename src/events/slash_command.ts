@@ -1,16 +1,16 @@
 import { Interaction } from 'discord.js';
-import Container from 'typedi';
+import { container, GombleClient } from "../services/di";
 import DiscordEvent from '../lib/classes/DiscordEvent';
-import GombleClient from '../services/GombleClient';
 
-const client = Container.get(GombleClient);
+const client = container.resolve(GombleClient);
 
-export default new DiscordEvent(
-	'interactionCreate',
-	false,
-	async (interaction: Interaction) => {
+const command: DiscordEvent = {
+	name: 'interactionCreate',
+	execute: async (interaction: Interaction) => {
 		if (!interaction.isCommand()) return;
 		const command = client.commands.get(interaction.commandName);
 		if (command) return command.run(interaction);
 	}
-);
+}
+
+export default command;

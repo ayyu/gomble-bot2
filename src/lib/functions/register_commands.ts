@@ -1,11 +1,8 @@
 import { REST } from "@discordjs/rest";
 import { Client } from "discord.js";
-import { ICommandHandler } from "../classes/ICommandHandler";
-import commandHandlers from "../../commands";
 import { Routes } from 'discord-api-types/v9';
-
-const commands = commandHandlers.map(
-	(command: ICommandHandler) => command.data.toJSON());
+import { ICommandHandler } from "../classes/ICommandHandler";
+import commands from "../../commands";
 
 export async function registerCommands(
 	client: Client,
@@ -16,10 +13,12 @@ export async function registerCommands(
 	if (!token || !client.user)
 		return;
 	const rest: REST = new REST({ version: '9' }).setToken(token);
+	const commandsJSON = commands.map(
+		(command: ICommandHandler) => command.data.toJSON());
 	const routes = guildId
 		? Routes.applicationGuildCommands(client.user.id, guildId)
 		: Routes.applicationCommands(client.user.id);
-	return rest.put(routes, { body: commands })
+	return rest.put(routes, { body: commandsJSON })
 		.then(() => console.log('Successfully registered commands.'))
 		.catch(console.error);
 }

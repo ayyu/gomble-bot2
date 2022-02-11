@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      String @id
+  balance Int
+  Bet     Bet[]
+}
+
+model Prediction {
+  id  String @id
+  Bet Bet[]
+}
+
+model Bet {
+  id           Int        @id @default(autoincrement())
+  amount       Int
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+  prediction   Prediction @relation(fields: [predictionId], references: [id])
+  predictionId String
+
+  @@unique([userId, predictionId])
+}

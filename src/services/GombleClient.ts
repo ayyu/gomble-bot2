@@ -1,16 +1,19 @@
-import { Client, Collection } from 'discord.js';
-import { options, token } from '../config/discord_client';
-import { Service } from 'typedi';
+import { inject, singleton } from "tsyringe";
+import { Client, ClientOptions, Collection } from "discord.js";
+
 import { ICommandHandler } from "../lib/classes/ICommandHandler";
 
-@Service()
+@singleton()
 class GombleClient extends Client {
 	commands: Collection<string, ICommandHandler>;
-	constructor() {
+	constructor(
+		@inject("clientOptions") options: ClientOptions,
+		@inject("discordToken") token: string,
+	) {
 		super(options);
-		this.token = token;
+		this.token = token ?? null;
 		this.commands = new Collection<string, ICommandHandler>();
 	}
 }
 
-export default GombleClient;
+export { GombleClient };
