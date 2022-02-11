@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"target": "es2018",
+		"module": "commonjs",
+		"strict": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"outDir": "./app",
+		"moduleResolution": "node",
+		"types": ["reflect-metadata", "node"],
+		"typeRoots": ["./node_modules/@types"],
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"resolveJsonModule": true
+	},
+	"exclude": ["node_modules"],
+	"include": ["./src/**/*.ts"],
+	"lib": ["es2018"]
+}
