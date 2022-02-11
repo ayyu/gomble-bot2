@@ -1,1 +1,0 @@
-{"version":3,"file":"bets.js","sourceRoot":"","sources":["../../src/config/bets.ts"],"names":[],"mappings":";;;AAAa,QAAA,OAAO,GAAG;IACtB;QACC,KAAK,EAAE,SAAS;QAChB,KAAK,EAAE,WAAW;QAClB,KAAK,EAAE,MAAM;QACb,OAAO,EAAE,IAAI;KACb;IACD;QACC,KAAK,EAAE,OAAO;QACd,KAAK,EAAE,UAAU;QACjB,KAAK,EAAE,OAAO;QACd,OAAO,EAAE,KAAK;KACd;CACD,CAAC"}
