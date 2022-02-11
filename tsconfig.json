@@ -5,7 +5,7 @@
 		"strict": true,
 		"sourceMap": true,
 		"esModuleInterop": true,
-		"outDir": "./app",
+		"outDir": "./dist",
 		"moduleResolution": "node",
 		"types": ["reflect-metadata", "node"],
 		"typeRoots": ["./node_modules/@types"],
