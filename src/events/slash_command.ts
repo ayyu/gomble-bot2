@@ -1,4 +1,4 @@
-import { Interaction, Message } from 'discord.js';
+import { Interaction } from 'discord.js';
 import Container from 'typedi';
 import DiscordEvent from '../lib/classes/DiscordEvent';
 import GombleClient from '../services/GombleClient';
